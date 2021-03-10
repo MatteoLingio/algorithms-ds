@@ -9,7 +9,7 @@ const bubble = arr => {
       }
     }
   }
-  console.log(arr);
+  return arr;
 };
 
 bubble([2, 1, 7, 4, 5]);
