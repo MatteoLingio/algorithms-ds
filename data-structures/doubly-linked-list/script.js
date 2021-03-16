@@ -96,6 +96,68 @@ class DoublyLinkedList {
       }
     }
   }
+
+  set(idx, val) {
+    if (idx < 0 || idx > this.length) return null;
+    const node = this.get(idx);
+    if (!node) return null;
+    node.value = val;
+    return node;
+  }
+
+  insert(idx, val) {
+    if (idx < 0 || idx > this.length) return null;
+
+    const newNode = new Node(val);
+
+    if (!this.head) {
+      this.head = newNode;
+    } else {
+      const node = this.get(idx);
+      if (!node) return null;
+      const pre = node.prev;
+      pre.next = newNode;
+      node.prev = newNode;
+      newNode.prev = pre;
+      newNode.next = node;
+    }
+    this.length++;
+    return this;
+  }
+
+  remove(idx) {
+    if (idx < 0 || idx >= this.length) return null;
+    if (idx === 0) return this.shift();
+    if (idx === this.length - 1) return this.pop();
+    const nodeToRemove = this.get(idx);
+    if (this.length == 0) {
+      this.head = 0;
+      this.tail = 0;
+    } else {
+      const prev = nodeToRemove.prev;
+      const next = nodeToRemove.next;
+      prev.next = next;
+      next.prev = prev;
+    }
+    this.length--;
+    return nodeToRemove;
+  }
+  reverse() {
+    let i = this.length;
+    let current = this.tail;
+    while (i > 0) {
+      const tmp = current.prev;
+      current.prev = current.next;
+      current.next = tmp;
+      current = tmp;
+      i--;
+    }
+
+    const tmp = this.head;
+    this.head = this.tail;
+    this.tail = tmp;
+    return this;
+  }
 }
 
 const list = new DoublyLinkedList();
